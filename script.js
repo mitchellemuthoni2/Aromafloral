@@ -1,37 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Hamburger Menu Toggle ---
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.getElementById('navLinks');
+   document.addEventListener('DOMContentLoaded', () => {
+    const hamburgerButton = document.querySelector('.hamburger');
+    const navLinksDiv = document.getElementById('navLinks');
 
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('show');
-            hamburger.classList.toggle('active');
-            // Toggle aria-expanded attribute for accessibility
-            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
-            hamburger.setAttribute('aria-expanded', !isExpanded);
+    if (hamburgerButton && navLinksDiv) {
+        hamburgerButton.addEventListener('click', () => {
+            // Toggle the 'is-active' class on the hamburger button
+            hamburgerButton.classList.toggle('is-active');
+
+            // Toggle the 'is-active' class on the nav-links div
+            navLinksDiv.classList.toggle('is-active');
+
+            // Update ARIA attribute for accessibility
+            const isExpanded = hamburgerButton.classList.contains('is-active');
+            hamburgerButton.setAttribute('aria-expanded', isExpanded);
         });
 
-        // Close the mobile menu when a nav link is clicked
-        navLinks.querySelectorAll('a').forEach(link => {
+        // Optional: Close menu when a link inside it is clicked
+        const navLinks = navLinksDiv.querySelectorAll('a');
+        navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                navLinks.classList.remove('show');
-                hamburger.classList.remove('active');
-                hamburger.setAttribute('aria-expanded', 'false');
+                hamburgerButton.classList.remove('is-active');
+                navLinksDiv.classList.remove('is-active');
+                hamburgerButton.setAttribute('aria-expanded', false);
             });
         });
-
-        // Close the mobile menu if clicked outside
-        document.addEventListener('click', (event) => {
-            if (!navLinks.contains(event.target) && !hamburger.contains(event.target)) {
-                if (navLinks.classList.contains('show')) {
-                    navLinks.classList.remove('show');
-                    hamburger.classList.remove('active');
-                    hamburger.setAttribute('aria-expanded', 'false');
-                }
-            }
-        });
+    } else {
+        console.warn('AmoraFloral: Hamburger button or nav-links element not found. Check your HTML.');
     }
+});
 
     // --- Testimonial Carousel ---
     const testimonialWrapper = document.querySelector('.testimonial-cards-wrapper');
