@@ -38,187 +38,152 @@ section {
 }
 
 /* Navigation */
+/* Basic styling for the navbar to make elements align */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--primary-color);
-  padding: 1rem 2rem;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  z-index: 1000;
-  overflow-x: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #f8f8f8; /* Example background */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .nav-left, .nav-right {
-  display: flex;
-  gap: 2rem;
-  flex: 1;
+    display: flex; /* Display horizontally for desktop */
+    gap: 20px; /* Space out links */
 }
 
-.nav-left {
-  justify-content: flex-start;
-}
-
-.nav-right {
-  justify-content: flex-end;
-}
-
-.nav-logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: var(--text-light);
-  text-align: center;
-  flex: 1;
-  white-space: nowrap;
-}
-
-.nav-left a, .nav-right a {
-  color: var(--text-light);
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: color var(--transition-speed) ease;
-}
-
-.nav-left a:hover, .nav-right a:hover {
-  color: var(--accent-color);
-}
-
-/* Mobile Navigation */
-.nav-links {
-  display: none;
-}
-
-.hamburger {
-  display: none;
-}
-
-/* Mobile Styles */
-@media (max-width: 768px) {
-  .navbar {
-    padding: 0.8rem 1.5rem;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-  }
-
-  .nav-left, .nav-right {
-    display: none;
-  }
-
-  .nav-logo {
-    order: -1;
-    flex:0 1 auto;
-    text-align: left;
-    font-size: 1.4rem;
-  }
-
-  .nav-links {
-    display: none;
-    width: 100%;
-    background-color: var(--primary-color);
-    flex-direction: column;
-    padding: 1rem 0;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-  }
-
-  .nav-links.show {
-    display: flex;
-    animation: slideDown 0.3s ease-out;
-  }
-
-  .nav-links a {
-    color: var(--text-light);
-    padding: 0.8rem 2rem;
+.nav-links a,
+.nav-left a,
+.nav-right a {
     text-decoration: none;
-    font-size: 1rem;
-    text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: color var(--transition-speed) ease;
-  }
+    color: #333;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+}
 
-  .nav-links a:hover {
-    color: var(--accent-color);
-  }
+.nav-links a:hover,
+.nav-left a:hover,
+.nav-right a:hover {
+    color: #ff69b4; /* AmoraFloral pink, or your brand color */
+}
 
-  /* Hamburger Menu */
-  .hamburger {
-    display: block;
-    order: 1;
+/* Hide the hamburger by default on desktop */
+.hamburger {
+    display: none;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.5rem;
-    z-index: 1001;
-  }
-
-  .hamburger-box {
+    padding: 0;
     width: 30px;
-    height: 24px;
-    display: inline-block;
+    height: 20px;
+    position: relative; /* For the inner lines */
+    z-index: 100; /* Ensure it's above other content */
+}
+
+/* Styling for the hamburger icon lines */
+.hamburger-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hamburger-inner {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #333;
     position: relative;
-  }
+    transition: background-color 0.3s ease-in-out;
+}
 
-  .hamburger-inner {
-    width: 100%;
-    height: 2px;
-    background-color: var(--text-light);
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform var(--transition-speed) ease;
-  }
-
-  .hamburger-inner::before,
-  .hamburger-inner::after {
+.hamburger-inner::before,
+.hamburger-inner::after {
     content: '';
+    display: block;
     width: 100%;
-    height: 2px;
-    background-color: var(--text-light);
+    height: 3px;
+    background-color: #333;
     position: absolute;
-    left: 0;
-    transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
-  }
+    transition: transform 0.3s ease-in-out, top 0.3s ease-in-out;
+}
 
-  .hamburger-inner::before {
+.hamburger-inner::before {
     top: -8px;
-  }
+}
 
-  .hamburger-inner::after {
+.hamburger-inner::after {
     top: 8px;
-  }
-
-  .hamburger.active .hamburger-inner {
-    transform: rotate(45deg);
-  }
-
-  .hamburger.active .hamburger-inner::before {
-    transform: translateY(8px) rotate(90deg);
-  }
-
-  .hamburger.active .hamburger-inner::after {
-    opacity: 0;
-  }
 }
 
-@keyframes slideDown {
-  from {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+/* Hamburger active state (transforms to 'X') */
+.hamburger.is-active .hamburger-inner {
+    background-color: transparent; /* Hide middle line */
 }
 
+.hamburger.is-active .hamburger-inner::before {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.is-active .hamburger-inner::after {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* The mobile menu (nav-links) */
+.nav-links {
+    display: none; /* Hidden by default */
+    flex-direction: column; /* Stack links vertically */
+    position: absolute;
+    top: 60px; /* Adjust based on your header height */
+    left: 0;
+    width: 100%;
+    background-color: #fefefe; /* Mobile menu background */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+    z-index: 99; /* Below hamburger but above other content */
+    text-align: center;
+    transition: transform 0.3s ease-in-out; /* For sliding effect */
+    transform: translateY(-100%); /* Start off-screen */
+    opacity: 0; /* Fade in */
+}
+
+.nav-links.is-active {
+    display: flex; /* Show when active */
+    transform: translateY(0); /* Slide into view */
+    opacity: 1; /* Fade in */
+}
+
+.nav-links a {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.nav-links a:last-child {
+    border-bottom: none;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+    .nav-left, .nav-right {
+        display: none; /* Hide traditional navigation links */
+    }
+
+    .hamburger {
+        display: block; /* Show hamburger button on small screens */
+    }
+}
+
+/* Hide the .nav-links on larger screens if you want to reuse it */
+@media (min-width: 769px) {
+    .nav-links {
+        display: none !important; /* Ensure it's hidden on desktop */
+    }
+    .hamburger {
+        display: none !important; /* Ensure hamburger is hidden on desktop */
+    }
+}
 /* Hero Section */
 .card1 {
   width: 90%;
